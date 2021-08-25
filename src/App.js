@@ -111,7 +111,6 @@ class BooksApp extends React.Component {
         });
   }
 
-
   changeHandler = (book, newList, oldList) => {
     if (newList !== "none" && newList !== oldList) {
       let booksarr = { ...this.state.books };
@@ -183,12 +182,14 @@ class BooksApp extends React.Component {
       .concat(this.state.books.currentlyReading);
     console.log(AllBooks);
 
-    
-      this.state.query == ""? (shownBooks=([...AllBooks])):
-      (shownBooks=(AllBooks.filter ((book)=> (book.title.toLowerCase().includes(this.state.query.toLowerCase())))))
-    
-    console.log ('shownBooks') 
-    console.log (shownBooks)
+    this.state.query == ""
+      ? (shownBooks = [...AllBooks])
+      : (shownBooks = AllBooks.filter((book) =>
+          book.title.toLowerCase().includes(this.state.query.toLowerCase())
+        ));
+
+    console.log("shownBooks");
+    console.log(shownBooks);
 
     return (
       <BrowserRouter>
@@ -230,9 +231,7 @@ class BooksApp extends React.Component {
                     </div>
                     <div className="search-books-results">
                       <ol className="books-grid">
-
-                        {
-                        shownBooks.map((book) => {
+                        {shownBooks.map((book) => {
                           return (
                             <li key={book.id}>
                               <div className="book">
@@ -271,11 +270,7 @@ class BooksApp extends React.Component {
                               </div>
                             </li>
                           );
-                        })
-                        
-                      }
-
-
+                        })}
                       </ol>
                     </div>
                   </div>
