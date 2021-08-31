@@ -9,7 +9,7 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
 
-    localStorage.length
+    (localStorage.getItem("State")!=="null")
       ? (this.state = JSON.parse(localStorage.getItem("State")))
       : (this.state = {
           /**
@@ -114,8 +114,6 @@ class BooksApp extends React.Component {
   changeHandler = (book, newList, oldList) => {
     if (newList !== "none" && newList !== oldList) {
       let booksarr = { ...this.state.books };
-      console.log("book is");
-      console.log(book);
       booksarr[newList].push(book);
 
       let updatedarr = booksarr[oldList].filter((mybook) => {
@@ -123,13 +121,11 @@ class BooksApp extends React.Component {
       });
 
       booksarr[oldList] = [...updatedarr];
-      //console.log('heeeey/n');
-      //console.log (updatedarr);
+
       this.setState({
         books: booksarr,
       });
-      console.log("local state:");
-      console.log(this.state);
+
 
       return booksarr;
     }
@@ -139,7 +135,6 @@ class BooksApp extends React.Component {
     this.setState({
       query: e.target.value,
     });
-    console.log(this.state.query);
   };
 
   searchChangeHandler = (book, newList) => {
@@ -180,16 +175,13 @@ class BooksApp extends React.Component {
     AllBooks = this.state.books.wantToRead
       .concat(this.state.books.read)
       .concat(this.state.books.currentlyReading);
-    console.log(AllBooks);
+
 
     this.state.query == ""
       ? (shownBooks = [...AllBooks])
       : (shownBooks = AllBooks.filter((book) =>
           book.title.toLowerCase().includes(this.state.query.toLowerCase())
         ));
-
-    console.log("shownBooks");
-    console.log(shownBooks);
 
     return (
       <BrowserRouter>
