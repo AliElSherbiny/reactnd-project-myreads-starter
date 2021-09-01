@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 // import * as BooksAPI from './BooksAPI'
 import "./App.css";
 import BooksList from "./Components/BooksList";
-import SearchPage from "./Components/SearchPage";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import * as remotes from "./BooksAPI.js";
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -108,8 +108,21 @@ class BooksApp extends React.Component {
 
           showSearchPage: false,
           query: "",
+          AllBooks:[]
         });
   }
+
+
+
+componentDidMount= async()=>
+ {
+  let AllBooks = [];
+ AllBooks = await remotes.getAll()
+ .then(async(AllBooks)=>(
+   this.setState ({AllBooks:[...AllBooks]})
+))    
+}
+
 
   changeHandler = (book, newList, oldList) => {
     if (newList !== "none" && newList !== oldList) {
@@ -169,19 +182,24 @@ class BooksApp extends React.Component {
   };
 
   render() {
-    window.localStorage.setItem("State", JSON.stringify(this.state));
-    let AllBooks = [];
     let shownBooks = [];
-    AllBooks = this.state.books.wantToRead
-      .concat(this.state.books.read)
-      .concat(this.state.books.currentlyReading);
+    window.localStorage.setItem("State", JSON.stringify(this.state));
 
+    // AllBooks = this.state.books.wantToRead
+    //   .concat(this.state.books.read)
+    //   .concat(this.state.books.currentlyReading);
+    console.log(this.state);
 
-    this.state.query == ""
-      ? (shownBooks = [...AllBooks])
-      : (shownBooks = AllBooks.filter((book) =>
+    (this.state&&this.state.query == "")
+      ? (shownBooks = [...this.state.AllBooks])
+      : (shownBooks = this.state.AllBooks.filter((book) =>
           book.title.toLowerCase().includes(this.state.query.toLowerCase())
-        ));
+        ))
+
+
+
+
+
 
     return (
       <BrowserRouter>
@@ -223,14 +241,16 @@ class BooksApp extends React.Component {
                     </div>
                     <div className="search-books-results">
                       <ol className="books-grid">
-                        {shownBooks.map((book) => {
+                        {this.state.AllBooks.map((book) => {  
                           return (
                             <li key={book.id}>
                               <div className="book">
                                 <div className="book-top">
                                   <div
                                     className="book-cover"
-                                    style={book.style}
+                                    style={{
+                                      backgroundImage:book.imageLinks.smallThumbnail
+                                    }}
                                   />
                                   <div className="book-shelf-changer">
                                     <select
@@ -257,7 +277,7 @@ class BooksApp extends React.Component {
                                 </div>
                                 <div className="book-title">{book.title}</div>
                                 <div className="book-authors">
-                                  {book.author}
+                                  {book.authors}
                                 </div>
                               </div>
                             </li>
