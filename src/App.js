@@ -172,7 +172,8 @@ componentDidMount= async()=>
       booksarr["wantToRead"] = [...updatedarr3];
 
       booksarr[newList].push(book);
-
+console.log('hey');
+console.log(book);
       this.setState({
         books: booksarr,
       });
@@ -242,8 +243,11 @@ componentDidMount= async()=>
                     <div className="search-books-results">
                       <ol className="books-grid">
                         {shownBooks.map((book) => {
-                          let url= `url("${book.imageLinks.smallThumbnail}")`
-                          console.log(url )
+                          let bookStyle = {
+                            width: 128,
+                            height: 188,
+                             backgroundImage: `url("${book.imageLinks.smallThumbnail}")` ,
+                          }
 
                           return (
                             <li key={book.id}>
@@ -251,17 +255,13 @@ componentDidMount= async()=>
                                 <div className="book-top">
                                   <div
                                     className="book-cover"
-                                    style={{
-                                      width: 128,
-                                      height: 188,
-                                       backgroundImage: url ,
-                                    }}
+                                    style={bookStyle}
                                   />
                                   <div className="book-shelf-changer">
                                     <select
                                       onChange={(event) =>
                                         this.searchChangeHandler(
-                                          book,
+                                          {title:book.title,author:book.authors,style:bookStyle},
                                           event.target.value
                                         )
                                       }
