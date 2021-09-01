@@ -89,7 +89,7 @@ class BooksApp extends React.Component {
                   width: 128,
                   height: 193,
                   backgroundImage:
-                    'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
+                  'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
                 },
               },
               {
@@ -241,7 +241,10 @@ componentDidMount= async()=>
                     </div>
                     <div className="search-books-results">
                       <ol className="books-grid">
-                        {shownBooks.map((book) => {  
+                        {shownBooks.map((book) => {
+                          let url= `url("${book.imageLinks.smallThumbnail}")`
+                          console.log(url )
+
                           return (
                             <li key={book.id}>
                               <div className="book">
@@ -249,7 +252,9 @@ componentDidMount= async()=>
                                   <div
                                     className="book-cover"
                                     style={{
-                                      backgroundImage:book.imageLinks.smallThumbnail
+                                      width: 128,
+                                      height: 188,
+                                       backgroundImage: url ,
                                     }}
                                   />
                                   <div className="book-shelf-changer">
