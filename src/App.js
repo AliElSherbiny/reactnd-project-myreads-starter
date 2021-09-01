@@ -241,7 +241,7 @@ componentDidMount= async()=>
                     </div>
                     <div className="search-books-results">
                       <ol className="books-grid">
-                        {this.state.AllBooks.map((book) => {  
+                        {shownBooks.map((book) => {  
                           return (
                             <li key={book.id}>
                               <div className="book">
