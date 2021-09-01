@@ -9,7 +9,7 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
 
-    (localStorage.getItem("State")!=="null")
+    (localStorage.getItem("State"))
       ? (this.state = JSON.parse(localStorage.getItem("State")))
       : (this.state = {
           /**
@@ -191,7 +191,7 @@ console.log(book);
     //   .concat(this.state.books.currentlyReading);
     console.log(this.state);
 
-    (this.state&&this.state.query == "")
+    ((this.state)&&(this.state.query == ""))
       ? (shownBooks = [...this.state.AllBooks])
       : (shownBooks = this.state.AllBooks.filter((book) =>
           book.title.toLowerCase().includes(this.state.query.toLowerCase())
