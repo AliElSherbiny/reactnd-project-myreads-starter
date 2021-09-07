@@ -4,7 +4,7 @@ import "../App.css";
 
 class Book extends Component {
   render() {
-    console.log(this.props.books.currentlyReading);
+    //console.log(this.props.books.currentlyReading);
     //console.log(this.props);
     return (
       <Fragment>
