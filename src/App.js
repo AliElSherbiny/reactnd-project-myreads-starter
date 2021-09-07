@@ -37,10 +37,19 @@ this.FetchAll();
 
   componentDidUpdate() {
 
+
     if(this.state.query)
     {
       remotes.search(this.state.query)
-      .then((response)=>(this.setState({shownBooks:response})))
+      .then((response)=>{
+        if(!(response.error))
+        this.setState({shownBooks:response})
+        else
+        this.setState({shownBooks:[]})
+      
+      
+      })
+      
     }
 
     if(this.state.updateHome)
@@ -67,36 +76,7 @@ this.FetchAll();
 
   };
 
-  searchChangeHandler = (book, newList) => {
-    if (newList !== "none") {
-      /*Search if the book is in any of the lists */
-      let booksarr = { ...this.state.books };
 
-      let updatedarr1 = booksarr["currentlyReading"].filter((mybook) => {
-        return mybook.title !== book.title;
-      });
-
-      let updatedarr2 = booksarr["read"].filter((mybook) => {
-        return mybook.title !== book.title;
-      });
-
-      let updatedarr3 = booksarr["wantToRead"].filter((mybook) => {
-        return mybook.title !== book.title;
-      });
-
-      booksarr["currentlyReading"] = [...updatedarr1];
-      booksarr["read"] = [...updatedarr2];
-      booksarr["wantToRead"] = [...updatedarr3];
-
-      booksarr[newList].push(book);
-
-      this.setState({
-        books: booksarr,
-      });
-
-      return booksarr;
-    }
-  };
 
   render() {
   
@@ -151,8 +131,9 @@ this.FetchAll();
                       </div>
                     </div>
                     <div className="search-books-results">
-                      <ol className="books-grid">
-                        {(this.state.shownBooks)&&
+                      {this.state.shownBooks?
+                      (<ol className="books-grid">
+                        {
                         (this.state.shownBooks.map((book) => {
                           let bookStyle = {
                             width: 128,
@@ -173,12 +154,8 @@ this.FetchAll();
                                   <div className="book-shelf-changer">
                                     <select
                                       onChange={(event) =>
-                                        this.searchChangeHandler(
-                                          {
-                                            title: book.title,
-                                            author: book.authors,
-                                            style: bookStyle,
-                                          },
+                                        this.changeHandler(
+                                          book.id   ,
                                           event.target.value
                                         )
                                       }
@@ -205,7 +182,8 @@ this.FetchAll();
                             </li>
                           );
                         }))}
-                      </ol>
+                      </ol>):(null)
+              }
                     </div>
                   </div>
                 );
