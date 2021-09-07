@@ -8,14 +8,18 @@ class BooksApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: [],
       showSearchPage: false,
       query: "",
       AllBooks: [],
+      shownBooks:[],
       updateHome:false,
-      shownBooks:[]
+      updateId:{},
+      updateList:''
     };
   }
+
+  FetchAll = ()=> (remotes.getAll()
+  .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks)))))))
 
   componentDidMount = async () => {
     // let AllBooks = [];
@@ -25,23 +29,10 @@ class BooksApp extends React.Component {
        this.setState ({AllBooks:[...AllBooks]})
     ))*/
 
-     remotes.getAll()
-     .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks))))))
-
+this.FetchAll();
     
 
-    /*remotes
-      .update(
-        {
-          title: "To Kill a Mockingbird",
-          id: 6,
-          author: "Harper Lee",
-        },
-        "wantToRead"
-      )
-      .then((res) => {
-        remotes.getAll().then((resp) => console.log(resp));
-      });*/
+
   };
 
   componentDidUpdate() {
@@ -51,33 +42,21 @@ class BooksApp extends React.Component {
       remotes.search(this.state.query)
       .then((response)=>(this.setState({shownBooks:response})))
     }
-    if (this.state.updateHome)
+
+    if(this.state.updateHome)
     {
-      remotes.getAll()
-      .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks))))))
+    remotes.update({id:this.state.updateId},this.state.updateList)
+    .then((res) =>(this.FetchAll()))
     }
 
   }
 
-  changeHandler = (book, newList, oldList) => {
+  changeHandler = (bookID, newList) => {
 
-    this.setState({updateHome:true})
-    if (newList !== "none" && newList !== oldList) {
-      let booksarr = { ...this.state.books };
-      booksarr[newList].push(book);
+    console.log(bookID , newList)
+    this.setState({updateHome:true,updateId:bookID,updateList:newList},(()=>(console.log(this.state))));
+  
 
-      let updatedarr = booksarr[oldList].filter((mybook) => {
-        return mybook.title !== book.title;
-      });
-
-      booksarr[oldList] = [...updatedarr];
-
-      this.setState({
-        books: booksarr,
-      });
-
-      return booksarr;
-    }
   };
 
   handleSearch = (e) => {

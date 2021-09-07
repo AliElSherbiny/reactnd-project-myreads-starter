@@ -12,6 +12,7 @@ class Book extends Component {
     this.props.books.map ((book)=>
     SortedBooks[book.shelf].push ({
       id: book.id,
+      shelf:book.shelf,
       title: book.title , 
       author: book.authors,
       style: {width: 128, height: 188,backgroundImage: `url("${ book.imageLinks.smallThumbnail }")` }
@@ -23,6 +24,7 @@ class Book extends Component {
       <Fragment>
         {this.props.ListType === "currentlyReading" && 
           SortedBooks.currentlyReading.map((book) => {
+            console.count(book.id);
             return (
               <li key={book.id}>
                 <div className="book">
@@ -32,9 +34,8 @@ class Book extends Component {
                       <select
                         onChange={(event) =>
                           this.props.changeHandler(
-                            book,
-                            event.target.value,
-                            "currentlyReading"
+                            book.id,
+                            event.target.value
                           )
                         }
                       >
@@ -68,9 +69,8 @@ class Book extends Component {
                       <select
                         onChange={(event) =>
                           this.props.changeHandler(
-                            book,
-                            event.target.value,
-                            "wantToRead"
+                            book.id,
+                            event.target.value
                           )
                         }
                       >
@@ -104,9 +104,8 @@ class Book extends Component {
                       <select
                         onChange={(event) =>
                           this.props.changeHandler(
-                            book,
-                            event.target.value,
-                            "read"
+                            book.id,
+                            event.target.values
                           )
                         }
                       >
