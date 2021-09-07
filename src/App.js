@@ -22,17 +22,7 @@ class BooksApp extends React.Component {
   .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks)))))))
 
   componentDidMount = async () => {
-    // let AllBooks = [];
-
-     /*AllBooks = await remotes.getAll()
-     .then(async(AllBooks)=>(
-       this.setState ({AllBooks:[...AllBooks]})
-    ))*/
-
-this.FetchAll();
-    
-
-
+    this.FetchAll();
   };
 
   componentDidUpdate() {
@@ -45,11 +35,8 @@ this.FetchAll();
         if(!(response.error))
         this.setState({shownBooks:response})
         else
-        this.setState({shownBooks:[]})
-      
-      
+        this.setState({shownBooks:[]})    
       })
-      
     }
 
     if(this.state.updateHome)
@@ -61,37 +48,19 @@ this.FetchAll();
   }
 
   changeHandler = (bookID, newList) => {
-
-    console.log(bookID , newList)
     this.setState({updateHome:true,updateId:bookID,updateList:newList},(()=>(console.log(this.state))));
-  
-
   };
 
   handleSearch = (e) => {
     this.setState({
       query: e.target.value,
     });
-
-
   };
 
 
 
   render() {
   
-    // window.localStorage.setItem("State", JSON.stringify(this.state));
-
-    // AllBooks = this.state.books.wantToRead
-    //   .concat(this.state.books.read)
-    //   .concat(this.state.books.currentlyReading);
-
-    // this.state && this.state.query == ""
-    //   ? (shownBooks = [...this.state.AllBooks])
-    //   : (shownBooks = this.state.AllBooks.filter((book) =>
-    //       book.title.toLowerCase().includes(this.state.query.toLowerCase())
-    //     ));
-
     return (
       <BrowserRouter>
         <div className="app">
@@ -114,14 +83,7 @@ this.FetchAll();
                         </button>
                       </Link>
                       <div className="search-books-input-wrapper">
-                        {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
 
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
                         <input
                           type="text"
                           placeholder="Search by title or author"
