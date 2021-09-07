@@ -12,6 +12,7 @@ class BooksApp extends React.Component {
       showSearchPage: false,
       query: "",
       AllBooks: [],
+      updateHome:false,
       shownBooks:[]
     };
   }
@@ -22,12 +23,14 @@ class BooksApp extends React.Component {
      /*AllBooks = await remotes.getAll()
      .then(async(AllBooks)=>(
        this.setState ({AllBooks:[...AllBooks]})
-    ))
+    ))*/
 
      remotes.getAll()
-     .then((resp)=>(console.log(resp)))
+     .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks))))))
 
-    remotes
+    
+
+    /*remotes
       .update(
         {
           title: "To Kill a Mockingbird",
@@ -48,10 +51,17 @@ class BooksApp extends React.Component {
       remotes.search(this.state.query)
       .then((response)=>(this.setState({shownBooks:response})))
     }
+    if (this.state.updateHome)
+    {
+      remotes.getAll()
+      .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks))))))
+    }
 
   }
 
   changeHandler = (book, newList, oldList) => {
+
+    this.setState({updateHome:true})
     if (newList !== "none" && newList !== oldList) {
       let booksarr = { ...this.state.books };
       booksarr[newList].push(book);
@@ -235,10 +245,11 @@ class BooksApp extends React.Component {
                       <div className="list-books-title">
                         <h1>MyReads</h1>
                       </div>
-                      {/*<BooksList
-                        books={this.state.books}
+                      {this.state.AllBooks?
+                      (<BooksList
+                        books={this.state.AllBooks}
                         changeHandler={this.changeHandler}
-                      />*/}
+                      />):(null)}
                       <div className="open-search">
                         <Link to="/search">
                           <button

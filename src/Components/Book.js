@@ -5,11 +5,24 @@ import "../App.css";
 class Book extends Component {
   render() {
     //console.log(this.props.books.currentlyReading);
-    //console.log(this.props);
+    //console.log(this.props.books);
+    let SortedBooks = { read:[] , wantToRead:[] , currentlyReading:[]};
+
+
+    this.props.books.map ((book)=>
+    SortedBooks[book.shelf].push ({
+      id: book.id,
+      title: book.title , 
+      author: book.authors,
+      style: {width: 128, height: 188,backgroundImage: `url("${ book.imageLinks.smallThumbnail }")` }
+    })
+    )
+   // console.log('all'); console.log(SortedBooks);
+
     return (
       <Fragment>
-        {this.props.ListType === "currentlyReading" &&
-          this.props.books.currentlyReading.map((book) => {
+        {this.props.ListType === "currentlyReading" && 
+          SortedBooks.currentlyReading.map((book) => {
             return (
               <li key={book.id}>
                 <div className="book">
@@ -45,7 +58,7 @@ class Book extends Component {
           })}
 
         {this.props.ListType === "wantToRead" &&
-          this.props.books.wantToRead.map((book) => {
+          SortedBooks.wantToRead.map((book) => {
             return (
               <li key={book.id}>
                 <div className="book">
@@ -81,7 +94,7 @@ class Book extends Component {
           })}
 
         {this.props.ListType === "read" &&
-          this.props.books.read.map((book) => {
+          SortedBooks.read.map((book) => {
             return (
               <li key={book.id}>
                 <div className="book">

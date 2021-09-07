@@ -13,7 +13,7 @@ class BooksList extends Component {
             <h2 className="bookshelf-title">Currently Reading</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                <Book ListType="currentlyReading" {...this.props} />
+               <Book ListType="currentlyReading" {...this.props} />
               </ol>
             </div>
           </div>
