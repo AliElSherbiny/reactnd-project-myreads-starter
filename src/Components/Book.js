@@ -3,6 +3,11 @@ import React, { Component, Fragment } from "react";
 import "../App.css";
 
 class Book extends Component {
+
+  shouldComponentUpdate()
+  {
+    return this.props.shouldUpdate
+  }
   render() {
 
     let SortedBooks = { read:[] , wantToRead:[] , currentlyReading:[]};
@@ -17,13 +22,12 @@ class Book extends Component {
       style: {width: 128, height: 188,backgroundImage: `url("${ book.imageLinks.smallThumbnail }")` }
     })
     )
-   // console.log('all'); console.log(SortedBooks);
 
     return (
       <Fragment>
         {this.props.ListType === "currentlyReading" && 
           SortedBooks.currentlyReading.map((book) => {
-            console.count(book.id);
+            //console.count(book.id);
             return (
               <li key={book.id}>
                 <div className="book">

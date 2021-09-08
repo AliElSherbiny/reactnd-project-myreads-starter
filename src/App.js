@@ -12,7 +12,7 @@ class BooksApp extends React.Component {
       query: "",
       AllBooks: [],
       shownBooks:[],
-      updateHome:false,
+      updateHome:true,
       updateId:{},
       updateList:''
     };
@@ -43,6 +43,7 @@ class BooksApp extends React.Component {
     {
     remotes.update({id:this.state.updateId},this.state.updateList)
     .then((res) =>(this.FetchAll()))
+    .then (this.setState({updateHome:false}))
     }
 
   }
@@ -168,6 +169,7 @@ class BooksApp extends React.Component {
                       (<BooksList
                         books={this.state.AllBooks}
                         changeHandler={this.changeHandler}
+                        shouldUpdate={this.state.updateHome}
                       />):(null)}
                       <div className="open-search">
                         <Link to="/search">
