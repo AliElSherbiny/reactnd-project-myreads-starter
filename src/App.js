@@ -12,14 +12,14 @@ class BooksApp extends React.Component {
       query: "",
       AllBooks: [],
       shownBooks:[],
-      updateHome:true,
+      updateHome:1,
       updateId:{},
       updateList:''
     };
   }
 
   FetchAll = ()=> (remotes.getAll()
-  .then((resp)=>(this.setState({AllBooks:resp,updateHome:false},(()=>(console.log(this.state.AllBooks)))))))
+  .then((resp)=>(this.setState({AllBooks:resp,updateHome:0},(()=>(console.log(this.state.AllBooks)))))))
 
   componentDidMount = async () => {
     this.FetchAll();
@@ -43,13 +43,13 @@ class BooksApp extends React.Component {
     {
     remotes.update({id:this.state.updateId},this.state.updateList)
     .then((res) =>(this.FetchAll()))
-    .then (this.setState({updateHome:false}))
+    .then (this.setState({updateHome:0}))
     }
 
   }
 
   changeHandler = (bookID, newList) => {
-    this.setState({updateHome:true,updateId:bookID,updateList:newList},(()=>(console.log(this.state))));
+    this.setState({updateHome:1,updateId:bookID,updateList:newList},(()=>(console.log(this.state))));
   };
 
   handleSearch = (e) => {

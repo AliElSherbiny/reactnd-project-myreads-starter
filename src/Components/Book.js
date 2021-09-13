@@ -6,11 +6,12 @@ class Book extends Component {
 
   shouldComponentUpdate()
   {
-    return this.props.shouldUpdate
+    return true//this.props.shouldUpdate
   }
   render() {
 
     let SortedBooks = { read:[] , wantToRead:[] , currentlyReading:[]};
+    const selected = {fontWeight: 'bold',color:'green'}
 
 
     this.props.books.map ((book)=>
@@ -42,11 +43,11 @@ class Book extends Component {
                           )
                         }
                       >
-                        <option value="move" disabled>
+                        <option value="move" disabled selected>
                           Move to...
                         </option>
-                        <option value="none">None</option>
-                        <option value="currentlyReading">
+                        <option value="none" >None</option>
+                        <option value="currentlyReading" style={selected} >
                           Currently Reading
                         </option>
                         <option value="wantToRead">Want to Read</option>
@@ -77,14 +78,14 @@ class Book extends Component {
                           )
                         }
                       >
-                        <option value="move" disabled>
+                        <option value="move" disabled selected>
                           Move to...
                         </option>
                         <option value="none">None</option>
                         <option value="currentlyReading">
                           Currently Reading
                         </option>
-                        <option value="wantToRead">Want to Read</option>
+                        <option value="wantToRead" style={selected} >Want to Read</option>
                         <option value="read">Read</option>
                       </select>
                     </div>
@@ -112,7 +113,7 @@ class Book extends Component {
                           )
                         }
                       >
-                        <option value="move" disabled>
+                        <option value="move" disabled selected>
                           Move to...
                         </option>
                         <option value="none">None</option>
@@ -120,7 +121,7 @@ class Book extends Component {
                           Currently Reading
                         </option>
                         <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
+                        <option value="read" style={selected} >Read</option>
                       </select>
                     </div>
                   </div>
