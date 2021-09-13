@@ -109,7 +109,7 @@ class Book extends Component {
                         onChange={(event) =>
                           this.props.changeHandler(
                             book.id,
-                            event.target.values
+                            event.target.value
                           )
                         }
                       >
