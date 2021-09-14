@@ -113,6 +113,10 @@ class BooksApp extends React.Component {
                             height: 188,
                             backgroundImage:img ,
                           };
+                          let shelfStyle = {
+                            selectedCurr: 1,selectedWant: 0,selectedRead: 0,
+                            styleCurr: {fontWeight: 'bold',color:'green'},styleWant:{},styleRead:{}
+                          }
 
                           return (
                             <li key={book.id}>
@@ -135,13 +139,13 @@ class BooksApp extends React.Component {
                                         Move to...
                                       </option>
                                       <option value="none">None</option>
-                                      <option value="currentlyReading">
+                                      <option value="currentlyReading" selected={shelfStyle.selectedCurr} style={shelfStyle.styleCurr}>
                                         Currently Reading
                                       </option>
-                                      <option value="wantToRead">
+                                      <option value="wantToRead" selected={shelfStyle.selectedWant} style={shelfStyle.styleWant}>
                                         Want to Read
                                       </option>
-                                      <option value="read">Read</option>
+                                      <option value="read" selected={shelfStyle.selectedRead} style={shelfStyle.styleRead} >Read</option>
                                     </select>
                                   </div>
                                 </div>
