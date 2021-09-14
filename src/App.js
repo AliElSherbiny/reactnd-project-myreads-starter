@@ -105,12 +105,13 @@ class BooksApp extends React.Component {
                       (<ol className="books-grid">
                         {
                         (this.state.shownBooks.map((book) => {
+                          let img= (book.imageLinks?(`url("${
+                            book.imageLinks.smallThumbnail
+                          }")`):(null))
                           let bookStyle = {
                             width: 128,
                             height: 188,
-                            backgroundImage: `url("${
-                              book.imageLinks.smallThumbnail
-                            }")`,
+                            backgroundImage:img ,
                           };
 
                           return (
