@@ -28,15 +28,21 @@ class BooksApp extends React.Component {
   componentDidUpdate() {
 
 
-    if(this.state.query)
+    if(this.state.updateHome)
     {
+      if (this.state.query) {
       remotes.search(this.state.query)
       .then((response)=>{
         if(!(response.error))
         this.setState({shownBooks:response})
         else
         this.setState({shownBooks:[]})    
-      })
+      })}
+
+      else
+      {
+        this.setState({shownBooks:[]})
+      }
     }
 
     if(this.state.updateHome)
@@ -55,7 +61,8 @@ class BooksApp extends React.Component {
   handleSearch = (e) => {
     this.setState({
       query: e.target.value,
-    });
+      updateHome:1
+    },(()=>(console.log(this.state))));
   };
 
 
@@ -88,7 +95,7 @@ class BooksApp extends React.Component {
                         <input
                           type="text"
                           placeholder="Search by title or author"
-                          value={this.state.query || ""}
+                          value={this.state.query}
                           onChange={(event) => this.handleSearch(event)}
                         />
                       </div>
