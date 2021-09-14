@@ -115,9 +115,30 @@ class BooksApp extends React.Component {
                           };
                           let shelfStyle = {
                             selectedCurr: 1,selectedWant: 0,selectedRead: 0,
-                            styleCurr: {fontWeight: 'bold',color:'green'},styleWant:{},styleRead:{}
+                            styleCurr: {},styleWant:{},styleRead:{} //fontWeight: 'bold',color:'green'
                           }
+                          this.state.AllBooks.map((homeBook)=>{
+                            console.log(book,homeBook);
+                            if (book.id==homeBook.id)
+                            {
+                              shelfStyle = {
+                                selectedCurr: 0,selectedWant: 0,selectedRead: 0,
+                                styleCurr: {},styleWant:{},styleRead:{} //fontWeight: 'bold',color:'green'
+                              }
 
+                              switch(homeBook.shelf) {
+                                case "currentlyReading" :
+                                  shelfStyle.selectedCurr = 1; shelfStyle.styleCurr = {fontWeight: 'bold',color:'green'}
+                                  break;
+                                case "wantToRead":
+                                  shelfStyle.selectedWant = 1; shelfStyle.styleWant = {fontWeight: 'bold',color:'green'}
+                                  break;
+                                case "read":
+                                  shelfStyle.selectedRead = 1; shelfStyle.styleRead = {fontWeight: 'bold',color:'green'}
+                                  break;
+                              }
+                            }
+                          })
                           return (
                             <li key={book.id}>
                               <div className="book">
