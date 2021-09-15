@@ -19,7 +19,7 @@ class BooksApp extends React.Component {
   }
 
   FetchAll = ()=> (remotes.getAll()
-  .then((resp)=>(this.setState({AllBooks:resp,updateHome:0},(()=>(console.log(this.state.AllBooks)))))))
+  .then((resp)=>(this.setState({AllBooks:resp,updateHome:0}))))
 
   componentDidMount = async () => {
     this.FetchAll();
@@ -114,16 +114,16 @@ class BooksApp extends React.Component {
                             backgroundImage:img ,
                           };
                           let shelfStyle = {
-                            selectedCurr: 1,selectedWant: 0,selectedRead: 0,
-                            styleCurr: {},styleWant:{},styleRead:{} //fontWeight: 'bold',color:'green'
+                            selectedCurr: 0,selectedWant: 0,selectedRead: 0, selectedNone:1,
+                            styleCurr: {},styleWant:{},styleRead:{},styleNone:{fontWeight: 'bold',color:'green'} //fontWeight: 'bold',color:'green'
                           }
                           this.state.AllBooks.map((homeBook)=>{
-                            console.log(book,homeBook);
-                            if (book.id==homeBook.id)
+                           
+                            if (book.id===homeBook.id)
                             {
                               shelfStyle = {
-                                selectedCurr: 0,selectedWant: 0,selectedRead: 0,
-                                styleCurr: {},styleWant:{},styleRead:{} //fontWeight: 'bold',color:'green'
+                                selectedCurr: 0,selectedWant: 0,selectedRead: 0, selectedNone:0,
+                                styleCurr: {},styleWant:{},styleRead:{},styleNone:{} //fontWeight: 'bold',color:'green'
                               }
 
                               switch(homeBook.shelf) {
@@ -136,9 +136,12 @@ class BooksApp extends React.Component {
                                 case "read":
                                   shelfStyle.selectedRead = 1; shelfStyle.styleRead = {fontWeight: 'bold',color:'green'}
                                   break;
+                                default:
+                                  shelfStyle.selectedNone = 1; shelfStyle.styleNone = {fontWeight: 'bold',color:'green'}
+                                  break;
                               }
                             }
-                          })
+                          return null;})
                           return (
                             <li key={book.id}>
                               <div className="book">
@@ -159,7 +162,7 @@ class BooksApp extends React.Component {
                                       <option value="move" disabled>
                                         Move to...
                                       </option>
-                                      <option value="none">None</option>
+                                      <option value="none" selected={shelfStyle.selectedNone} style={shelfStyle.styleNone}>None</option>
                                       <option value="currentlyReading" selected={shelfStyle.selectedCurr} style={shelfStyle.styleCurr}>
                                         Currently Reading
                                       </option>
